@@ -18,8 +18,6 @@
     --green: #4ade80;
     --green-dim: #22c55e44;
     --green-muted: #86efac;
-    --amber: #fbbf24;
-    --amber-dim: #f59e0b44;
     --red: #f87171;
     --text: #e8f0e8;
     --text-muted: #7a9a7a;
@@ -32,1081 +30,305 @@
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--font-body);
-    min-height: 100dvh;
-    overflow-x: hidden;
-    padding-bottom: env(safe-area-inset-bottom);
-  }
-
-  /* SCREENS */
+  body { background: var(--bg); color: var(--text); font-family: var(--font-body); min-height: 100dvh; overflow-x: hidden; padding-bottom: env(safe-area-inset-bottom); }
   .screen { display: none; min-height: 100dvh; flex-direction: column; }
   .screen.active { display: flex; }
+  .hidden { display: none !important; }
 
-  /* ── SETUP SCREEN ── */
-  #screen-setup {
-    padding: 0;
-    background: var(--bg);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .setup-hero {
-    padding: 60px 28px 36px;
-    position: relative;
-    z-index: 1;
-  }
-
-  .setup-hero::before {
-    content: '';
-    position: absolute;
-    top: -80px; left: -80px;
-    width: 340px; height: 340px;
-    background: radial-gradient(circle, #4ade8022 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 40px;
-  }
-
-  .logo-icon {
-    width: 36px; height: 36px;
-    background: var(--green);
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px;
-  }
-
-  .logo-text {
-    font-family: var(--font-display);
-    font-size: 22px;
-    letter-spacing: -0.3px;
-  }
-
-  .hero-label {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 2px;
-    color: var(--green);
-    text-transform: uppercase;
-    margin-bottom: 14px;
-  }
-
-  .hero-title {
-    font-family: var(--font-display);
-    font-size: 42px;
-    line-height: 1.05;
-    letter-spacing: -1px;
-    margin-bottom: 16px;
-    color: var(--text);
-  }
-
-  .hero-title em {
-    font-style: italic;
-    color: var(--green);
-  }
-
-  .hero-sub {
-    font-size: 15px;
-    color: var(--text-muted);
-    line-height: 1.6;
-  }
-
-  .setup-body {
-    flex: 1;
-    padding: 0 28px 40px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    z-index: 1;
-    position: relative;
-  }
-
-  .setup-section-label {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 2px;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    margin-bottom: 4px;
-    margin-top: 8px;
-  }
-
-  .input-field {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 16px;
-    font-family: var(--font-mono);
-    font-size: 13px;
-    color: var(--text);
-    width: 100%;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-
+  /* SETUP */
+  #screen-setup { background: var(--bg); position: relative; overflow: hidden; }
+  .setup-hero { padding: 60px 28px 36px; position: relative; z-index: 1; }
+  .setup-hero::before { content: ''; position: absolute; top: -80px; left: -80px; width: 340px; height: 340px; background: radial-gradient(circle, #4ade8022 0%, transparent 70%); pointer-events: none; }
+  .logo { display: flex; align-items: center; gap: 10px; margin-bottom: 40px; }
+  .logo-icon { width: 36px; height: 36px; background: var(--green); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+  .logo-text { font-family: var(--font-display); font-size: 22px; }
+  .hero-label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 2px; color: var(--green); text-transform: uppercase; margin-bottom: 14px; }
+  .hero-title { font-family: var(--font-display); font-size: 42px; line-height: 1.05; letter-spacing: -1px; margin-bottom: 16px; }
+  .hero-title em { font-style: italic; color: var(--green); }
+  .hero-sub { font-size: 15px; color: var(--text-muted); line-height: 1.6; }
+  .setup-body { flex: 1; padding: 0 28px 40px; display: flex; flex-direction: column; gap: 14px; z-index: 1; position: relative; }
+  .setup-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 2px; color: var(--text-dim); text-transform: uppercase; margin-top: 8px; }
+  .input-field { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 16px; font-family: var(--font-mono); font-size: 13px; color: var(--text); width: 100%; outline: none; transition: border-color 0.2s; }
   .input-field:focus { border-color: var(--green); }
   .input-field::placeholder { color: var(--text-dim); }
+  .input-hint { font-size: 12px; color: var(--text-dim); line-height: 1.5; }
 
-  .input-hint {
-    font-size: 12px;
-    color: var(--text-dim);
-    margin-top: 6px;
-    line-height: 1.5;
-  }
-
-  .btn-primary {
-    background: var(--green);
-    color: #0a0f0a;
-    border: none;
-    border-radius: var(--radius-sm);
-    padding: 18px 24px;
-    font-family: var(--font-body);
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    width: 100%;
-    margin-top: 8px;
-    transition: opacity 0.2s, transform 0.1s;
-    letter-spacing: -0.2px;
-  }
-
+  /* BUTTONS */
+  .btn-primary { background: var(--green); color: #0a0f0a; border: none; border-radius: var(--radius-sm); padding: 18px 24px; font-family: var(--font-body); font-size: 16px; font-weight: 600; cursor: pointer; width: 100%; transition: opacity 0.2s, transform 0.1s; letter-spacing: -0.2px; }
   .btn-primary:active { opacity: 0.85; transform: scale(0.98); }
-
-  /* ── FOCUS SCREEN ── */
-  #screen-focus {
-    padding: 0;
-  }
-
-  .page-header {
-    padding: 56px 24px 24px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .back-btn {
-    background: none;
-    border: none;
-    color: var(--text-muted);
-    font-family: var(--font-body);
-    font-size: 14px;
-    cursor: pointer;
-    padding: 0;
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .page-title {
-    font-family: var(--font-display);
-    font-size: 30px;
-    letter-spacing: -0.5px;
-  }
-
-  .page-sub {
-    font-size: 14px;
-    color: var(--text-muted);
-    margin-top: 6px;
-    line-height: 1.5;
-  }
-
-  .focus-grid {
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    flex: 1;
-  }
-
-  .focus-card {
-    background: var(--surface);
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px;
-    cursor: pointer;
-    transition: border-color 0.2s, background 0.2s;
-    display: flex;
-    align-items: flex-start;
-    gap: 16px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .focus-card.selected {
-    border-color: var(--green);
-    background: var(--green-dim);
-  }
-
-  .focus-card:active { opacity: 0.8; }
-
-  .focus-icon {
-    font-size: 24px;
-    width: 44px; height: 44px;
-    background: var(--surface2);
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-
-  .focus-card.selected .focus-icon {
-    background: #4ade8022;
-  }
-
-  .focus-info { flex: 1; }
-
-  .focus-name {
-    font-weight: 600;
-    font-size: 15px;
-    margin-bottom: 4px;
-  }
-
-  .focus-desc {
-    font-size: 13px;
-    color: var(--text-muted);
-    line-height: 1.5;
-  }
-
-  .focus-check {
-    width: 22px; height: 22px;
-    border: 2px solid var(--border);
-    border-radius: 50%;
-    flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center;
-    transition: all 0.2s;
-    margin-top: 2px;
-  }
-
-  .focus-card.selected .focus-check {
-    background: var(--green);
-    border-color: var(--green);
-    color: #0a0f0a;
-    font-size: 12px;
-  }
-
-  .btn-secondary {
-    background: var(--surface);
-    color: var(--text);
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 16px 24px;
-    font-family: var(--font-body);
-    font-size: 15px;
-    font-weight: 500;
-    cursor: pointer;
-    width: 100%;
-    transition: border-color 0.2s;
-  }
-
+  .btn-secondary { background: var(--surface); color: var(--text); border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 16px 24px; font-family: var(--font-body); font-size: 15px; font-weight: 500; cursor: pointer; width: 100%; }
   .btn-secondary:active { opacity: 0.8; }
 
-  .focus-actions {
-    padding: 16px 24px 32px;
-  }
+  /* PAGE HEADER */
+  .page-header { padding: 56px 24px 24px; border-bottom: 1px solid var(--border); }
+  .back-btn { background: none; border: none; color: var(--text-muted); font-family: var(--font-body); font-size: 14px; cursor: pointer; padding: 0; margin-bottom: 16px; display: flex; align-items: center; gap: 6px; }
+  .page-title { font-family: var(--font-display); font-size: 30px; letter-spacing: -0.5px; }
+  .page-sub { font-size: 14px; color: var(--text-muted); margin-top: 6px; line-height: 1.5; }
+  .focus-pill { display: inline-flex; align-items: center; gap: 6px; background: var(--green-dim); border: 1px solid var(--green); border-radius: 100px; padding: 5px 12px; font-family: var(--font-mono); font-size: 11px; color: var(--green); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
 
-  /* ── RECORD SCREEN ── */
-  #screen-record { background: var(--bg); }
+  /* FOCUS SCREEN */
+  #screen-focus { overflow-y: auto; padding-bottom: 100px; }
+  .focus-grid { padding: 20px 24px; display: flex; flex-direction: column; gap: 12px; }
+  .focus-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 18px; cursor: pointer; transition: border-color 0.2s, background 0.2s; display: flex; align-items: flex-start; gap: 14px; }
+  .focus-card.selected { border-color: var(--green); background: var(--green-dim); }
+  .focus-card:active { opacity: 0.8; }
+  .focus-icon { font-size: 22px; width: 42px; height: 42px; background: var(--surface2); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .focus-card.selected .focus-icon { background: #4ade8022; }
+  .focus-info { flex: 1; }
+  .focus-name { font-weight: 600; font-size: 15px; margin-bottom: 3px; }
+  .focus-desc { font-size: 13px; color: var(--text-muted); line-height: 1.45; }
+  .focus-check { width: 22px; height: 22px; border: 2px solid var(--border); border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .focus-card.selected .focus-check { background: var(--green); border-color: var(--green); color: #0a0f0a; font-size: 12px; }
+  .focus-actions { padding: 16px 24px 32px; }
 
-  .record-header {
-    padding: 56px 24px 20px;
-    border-bottom: 1px solid var(--border);
-  }
+  /* RECORD SCREEN */
+  #screen-record { overflow-y: auto; padding-bottom: 100px; }
+  .record-header { padding: 56px 24px 20px; border-bottom: 1px solid var(--border); }
+  .view-tip { margin: 14px 24px 0; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; display: flex; gap: 10px; align-items: flex-start; }
+  .tip-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 1.5px; color: var(--text-dim); text-transform: uppercase; margin-bottom: 3px; }
+  .tip-text { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
 
-  .focus-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: var(--green-dim);
-    border: 1px solid var(--green);
-    border-radius: 100px;
-    padding: 5px 12px;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--green);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 12px;
-  }
+  .video-zone { padding: 16px 24px 0; }
+  .zone-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .zone-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-dim); }
+  .zone-status { font-size: 12px; color: var(--text-dim); }
+  .zone-status.ready { color: var(--green); }
 
-  .angle-tabs {
-    display: flex;
-    gap: 8px;
-    padding: 20px 24px 0;
-  }
+  .video-slot { background: var(--surface); border: 1.5px dashed var(--border); border-radius: var(--radius); aspect-ratio: 16/9; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; position: relative; overflow: hidden; margin-bottom: 10px; }
+  .video-slot.has-video { border-style: solid; border-color: var(--green); }
+  .video-slot video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .video-slot-icon { font-size: 28px; opacity: 0.3; }
+  .video-slot-text { font-size: 12px; color: var(--text-dim); text-align: center; line-height: 1.5; }
+  .video-slot-badge { position: absolute; top: 10px; right: 10px; background: var(--green); color: #0a0f0a; font-family: var(--font-mono); font-size: 10px; padding: 3px 8px; border-radius: 6px; font-weight: 500; }
+  .video-slot-clear { position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.65); border: none; color: white; width: 28px; height: 28px; border-radius: 50%; font-size: 13px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 
-  .angle-tab {
-    flex: 1;
-    background: var(--surface);
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 14px 10px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
+  .video-actions { display: flex; gap: 10px; margin-bottom: 6px; }
+  .btn-cam { flex: 1; background: var(--red); color: white; border: none; border-radius: var(--radius-sm); padding: 14px 8px; font-family: var(--font-body); font-size: 14px; font-weight: 600; cursor: pointer; }
+  .btn-lib { flex: 1; background: var(--surface); color: var(--text); border: 1.5px solid var(--border); border-radius: var(--radius-sm); padding: 14px 8px; font-family: var(--font-body); font-size: 14px; cursor: pointer; }
+  .btn-cam:active, .btn-lib:active { opacity: 0.8; }
 
-  .angle-tab.active {
-    border-color: var(--green);
-    background: var(--green-dim);
-  }
+  .ios-note { font-size: 11px; color: var(--text-dim); text-align: center; margin-bottom: 4px; font-family: var(--font-mono); }
 
-  .angle-tab-title {
-    font-weight: 600;
-    font-size: 13px;
-    margin-bottom: 2px;
-  }
+  .record-footer { padding: 20px 24px 0; display: flex; flex-direction: column; gap: 10px; }
+  .session-bar { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; }
+  .session-label { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); }
+  .session-val { font-family: var(--font-mono); font-size: 13px; color: var(--green); font-weight: 500; }
 
-  .angle-tab-sub {
-    font-size: 11px;
-    color: var(--text-muted);
-  }
-
-  .angle-tab.active .angle-tab-title { color: var(--green); }
-
-  .video-zone {
-    padding: 20px 24px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .video-slot {
-    background: var(--surface);
-    border: 1.5px dashed var(--border);
-    border-radius: var(--radius);
-    aspect-ratio: 9/16;
-    max-height: 340px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
-    transition: border-color 0.2s;
-  }
-
-  .video-slot.has-video {
-    border-style: solid;
-    border-color: var(--green);
-  }
-
-  .video-slot video {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: var(--radius);
-  }
-
-  .video-slot-icon { font-size: 36px; opacity: 0.4; }
-  .video-slot-text { font-size: 14px; color: var(--text-muted); text-align: center; line-height: 1.5; }
-  .video-slot-badge {
-    position: absolute;
-    top: 12px; right: 12px;
-    background: var(--green);
-    color: #0a0f0a;
-    font-family: var(--font-mono);
-    font-size: 10px;
-    font-weight: 500;
-    padding: 4px 8px;
-    border-radius: 6px;
-    letter-spacing: 0.5px;
-  }
-
-  .video-actions {
-    display: flex;
-    gap: 10px;
-  }
-
-  .btn-record {
-    flex: 1;
-    background: var(--red);
-    color: white;
-    border: none;
-    border-radius: var(--radius-sm);
-    padding: 16px;
-    font-family: var(--font-body);
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    transition: opacity 0.2s;
-  }
-
-  .btn-upload {
-    flex: 1;
-    background: var(--surface);
-    color: var(--text);
-    border: 1.5px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 16px;
-    font-family: var(--font-body);
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    transition: border-color 0.2s;
-  }
-
-  .btn-upload:active, .btn-record:active { opacity: 0.8; }
-
-  .record-footer {
-    padding: 0 24px 32px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .analyse-count {
-    text-align: center;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--text-dim);
-  }
-
-  /* Recording UI */
-  .recording-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: #000;
-    z-index: 100;
-    flex-direction: column;
-  }
-
-  .recording-overlay.active { display: flex; }
-
-  #camera-preview {
-    flex: 1;
-    width: 100%;
-    object-fit: cover;
-    transform: scaleX(-1);
-  }
-
-  .recording-controls {
-    background: rgba(0,0,0,0.8);
-    padding: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-bottom: calc(24px + env(safe-area-inset-bottom));
-  }
-
-  .rec-btn-close {
-    background: rgba(255,255,255,0.1);
-    border: none;
-    color: white;
-    width: 50px; height: 50px;
-    border-radius: 50%;
-    font-size: 20px;
-    cursor: pointer;
-  }
-
-  .rec-btn-capture {
-    width: 72px; height: 72px;
-    border-radius: 50%;
-    background: white;
-    border: 4px solid rgba(255,255,255,0.3);
-    cursor: pointer;
-    position: relative;
-    transition: transform 0.1s;
-  }
-
-  .rec-btn-capture.recording {
-    background: var(--red);
-  }
-
-  .rec-btn-capture:active { transform: scale(0.93); }
-
-  .rec-indicator {
-    width: 50px; height: 50px;
-    display: flex; align-items: center; justify-content: center;
-  }
-
-  .rec-dot {
-    width: 10px; height: 10px;
-    border-radius: 50%;
-    background: var(--red);
-    display: none;
-    animation: blink 1s infinite;
-  }
-
-  .recording-overlay.recording .rec-dot { display: block; }
-
-  @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.2; } }
-
-  .countdown-overlay {
-    display: none;
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,0.6);
-    align-items: center;
-    justify-content: center;
-    z-index: 101;
-  }
-
-  .countdown-overlay.active { display: flex; }
-
-  .countdown-num {
-    font-family: var(--font-display);
-    font-size: 120px;
-    color: white;
-    text-shadow: 0 0 40px rgba(74,222,128,0.8);
-    animation: countPop 1s ease-out forwards;
-  }
-
-  @keyframes countPop {
-    0% { transform: scale(1.4); opacity: 0; }
-    20% { opacity: 1; transform: scale(1); }
-    80% { opacity: 1; }
-    100% { opacity: 0; }
-  }
-
-  /* ── ANALYSIS SCREEN ── */
-  #screen-analysis { overflow-y: auto; }
-
-  .analysis-header {
-    padding: 56px 24px 20px;
-    border-bottom: 1px solid var(--border);
-    position: sticky;
-    top: 0;
-    background: var(--bg);
-    z-index: 10;
-  }
-
-  .loading-state {
-    padding: 60px 24px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-  }
-
-  .spinner {
-    width: 52px; height: 52px;
-    border: 3px solid var(--border);
-    border-top-color: var(--green);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-  }
-
+  /* ANALYSIS */
+  #screen-analysis { overflow-y: auto; padding-bottom: 100px; }
+  .analysis-header { padding: 56px 24px 20px; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--bg); z-index: 10; }
+  .spinner { width: 50px; height: 50px; border: 3px solid var(--border); border-top-color: var(--green); border-radius: 50%; animation: spin 0.8s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-state { padding: 60px 24px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+  .loading-title { font-family: var(--font-display); font-size: 24px; }
+  .loading-sub { font-size: 14px; color: var(--text-muted); }
+  .loading-steps { display: flex; flex-direction: column; gap: 10px; text-align: left; width: 100%; }
+  .step { display: flex; align-items: center; gap: 12px; font-size: 13px; color: var(--text-dim); font-family: var(--font-mono); }
+  .step.active { color: var(--green); }
+  .step.done { color: var(--text-muted); }
+  .step-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); flex-shrink: 0; }
+  .step.active .step-dot { background: var(--green); animation: pulse 0.8s infinite; }
+  .step.done .step-dot { background: var(--text-dim); }
+  @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.2; } }
 
-  .loading-title {
-    font-family: var(--font-display);
-    font-size: 24px;
-  }
+  .results-container { padding: 24px; display: flex; flex-direction: column; gap: 20px; }
+  .priority-badge { display: inline-flex; align-items: center; gap: 5px; padding: 5px 12px; border-radius: 100px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
+  .p1 { background: #f8717122; border: 1px solid #f87171; color: #f87171; }
+  .p2 { background: #fbbf2422; border: 1px solid #fbbf24; color: #fbbf24; }
+  .p3 { background: #4ade8022; border: 1px solid #4ade80; color: #4ade80; }
 
-  .loading-sub {
-    font-size: 14px;
-    color: var(--text-muted);
-    line-height: 1.6;
-  }
+  .result-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .result-card-header { padding: 16px 18px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; }
+  .result-phase { font-family: var(--font-display); font-size: 18px; flex: 1; }
+  .result-card-body { padding: 18px; display: flex; flex-direction: column; gap: 16px; }
+  .rl { font-family: var(--font-mono); font-size: 10px; letter-spacing: 2px; color: var(--text-dim); text-transform: uppercase; margin-bottom: 5px; }
+  .rt { font-size: 14px; line-height: 1.7; color: var(--text); }
+  .rt-dim { font-size: 14px; line-height: 1.7; color: var(--text-muted); }
 
-  .loading-steps {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    text-align: left;
-    width: 100%;
-  }
+  .frame-img { width: 100%; border-radius: var(--radius-sm); object-fit: cover; max-height: 220px; border: 1.5px solid var(--green); display: block; }
+  .frame-cap { font-family: var(--font-mono); font-size: 10px; color: var(--text-dim); margin-top: 5px; }
 
-  .loading-step {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 13px;
-    color: var(--text-dim);
-    font-family: var(--font-mono);
-    transition: color 0.3s;
-  }
+  .frame-strip { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .frame-strip::-webkit-scrollbar { display: none; }
+  .frame-thumb-wrap { flex-shrink: 0; text-align: center; }
+  .frame-thumb { width: 90px; height: 54px; border-radius: 7px; object-fit: cover; border: 1.5px solid var(--border); display: block; }
+  .frame-thumb-cap { font-family: var(--font-mono); font-size: 9px; color: var(--text-dim); margin-top: 3px; width: 90px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-  .loading-step.active { color: var(--green); }
-  .loading-step.done { color: var(--text-muted); }
+  .drill-box { background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; }
+  .drill-title { font-weight: 600; font-size: 14px; margin-bottom: 6px; }
+  .drill-text { font-size: 13px; color: var(--text-muted); line-height: 1.65; }
 
-  .step-dot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: var(--border);
-    flex-shrink: 0;
-    transition: background 0.3s;
-  }
+  .top-banner { background: var(--green-dim); border: 1px solid var(--green); border-radius: var(--radius-sm); padding: 14px 16px; display: flex; gap: 12px; }
+  .banner-icon { font-size: 18px; flex-shrink: 0; }
+  .banner-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 1.5px; color: var(--green); text-transform: uppercase; margin-bottom: 4px; }
+  .banner-text { font-size: 13px; color: var(--green-muted); line-height: 1.65; }
 
-  .loading-step.active .step-dot { background: var(--green); animation: blink 0.8s infinite; }
-  .loading-step.done .step-dot { background: var(--text-dim); }
+  .analysis-actions { padding: 0 24px 40px; display: flex; flex-direction: column; gap: 12px; }
 
-  /* Results */
-  .results-container {
-    padding: 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .priority-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 14px;
-    border-radius: 100px;
-    font-family: var(--font-mono);
-    font-size: 11px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    font-weight: 500;
-  }
-
-  .priority-1 { background: #f8717122; border: 1px solid #f87171; color: #f87171; }
-  .priority-2 { background: #fbbf2422; border: 1px solid #fbbf24; color: #fbbf24; }
-  .priority-3 { background: #4ade8022; border: 1px solid #4ade80; color: #4ade80; }
-
-  .result-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-  }
-
-  .result-card-header {
-    padding: 18px 20px;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .result-phase {
-    font-family: var(--font-display);
-    font-size: 18px;
-    flex: 1;
-  }
-
-  .result-card-body {
-    padding: 18px 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .result-section-label {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 2px;
-    color: var(--text-dim);
-    text-transform: uppercase;
-    margin-bottom: 6px;
-  }
-
-  .result-text {
-    font-size: 14px;
-    line-height: 1.7;
-    color: var(--text-muted);
-  }
-
-  .result-observation { color: var(--text); font-size: 14px; line-height: 1.7; }
-
-  .drill-box {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 14px;
-  }
-
-  .drill-title {
-    font-weight: 600;
-    font-size: 14px;
-    margin-bottom: 6px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .drill-title::before {
-    content: '⛳';
-    font-size: 16px;
-  }
-
-  .drill-text {
-    font-size: 13px;
-    color: var(--text-muted);
-    line-height: 1.65;
-  }
-
-  .focus-highlight {
-    background: var(--green-dim);
-    border: 1px solid var(--green);
-    border-radius: var(--radius-sm);
-    padding: 14px 16px;
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-  }
-
-  .focus-highlight-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
-
-  .focus-highlight-text {
-    font-size: 13px;
-    color: var(--green-muted);
-    line-height: 1.65;
-  }
-
-  .focus-highlight-label {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 1.5px;
-    color: var(--green);
-    text-transform: uppercase;
-    margin-bottom: 4px;
-  }
-
-  .analysis-actions {
-    padding: 0 24px 40px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  /* History screen */
-  #screen-history { overflow-y: auto; }
-
-  .history-list {
-    padding: 20px 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .history-item {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 16px 18px;
-    cursor: pointer;
-    transition: border-color 0.2s;
-  }
-
+  /* HISTORY */
+  #screen-history { overflow-y: auto; padding-bottom: 100px; }
+  .history-list { padding: 20px 24px; display: flex; flex-direction: column; gap: 12px; }
+  .history-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; cursor: pointer; }
   .history-item:active { opacity: 0.8; }
-
-  .history-item-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 6px;
-  }
-
-  .history-date {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    color: var(--text-dim);
-  }
-
-  .history-focus {
-    font-size: 12px;
-    color: var(--green);
-    font-weight: 500;
-  }
-
-  .history-summary {
-    font-size: 13px;
-    color: var(--text-muted);
-    line-height: 1.5;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  .empty-state {
-    padding: 60px 24px;
-    text-align: center;
-    color: var(--text-muted);
-    font-size: 14px;
-    line-height: 1.7;
-  }
-
+  .hi-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+  .hi-date { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); }
+  .hi-focus { font-size: 12px; color: var(--green); font-weight: 500; }
+  .hi-summary { font-size: 13px; color: var(--text-muted); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .empty-state { padding: 60px 24px; text-align: center; color: var(--text-muted); font-size: 14px; line-height: 1.7; }
   .empty-icon { font-size: 48px; margin-bottom: 16px; opacity: 0.4; }
 
-  /* Bottom nav */
-  .bottom-nav {
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
-    background: rgba(10,15,10,0.95);
-    backdrop-filter: blur(20px);
-    border-top: 1px solid var(--border);
-    display: flex;
-    padding: 10px 0 calc(10px + env(safe-area-inset-bottom));
-    z-index: 50;
-  }
-
-  .nav-item {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    cursor: pointer;
-    padding: 6px;
-    border: none;
-    background: none;
-    color: var(--text-dim);
-    transition: color 0.2s;
-  }
-
+  /* BOTTOM NAV */
+  .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(10,15,10,0.96); backdrop-filter: blur(20px); border-top: 1px solid var(--border); display: flex; padding: 10px 0 calc(10px + env(safe-area-inset-bottom)); z-index: 50; }
+  .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; padding: 6px; border: none; background: none; color: var(--text-dim); }
   .nav-item.active { color: var(--green); }
-  .nav-item-icon { font-size: 22px; }
-  .nav-item-label { font-size: 10px; font-family: var(--font-mono); letter-spacing: 0.5px; }
+  .nav-icon { font-size: 22px; }
+  .nav-label { font-size: 10px; font-family: var(--font-mono); }
 
-  /* session counter */
-  .session-bar {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 12px 16px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .session-label { font-family: var(--font-mono); font-size: 11px; color: var(--text-dim); }
-  .session-count { font-family: var(--font-mono); font-size: 13px; color: var(--green); font-weight: 500; }
-
-  /* Toast */
-  .toast {
-    position: fixed;
-    bottom: 90px; left: 24px; right: 24px;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 14px 16px;
-    font-size: 14px;
-    z-index: 200;
-    transform: translateY(20px);
-    opacity: 0;
-    transition: all 0.3s;
-    text-align: center;
-  }
-
+  /* TOAST */
+  .toast { position: fixed; bottom: 90px; left: 24px; right: 24px; background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px 16px; font-size: 14px; z-index: 200; transform: translateY(20px); opacity: 0; transition: all 0.3s; text-align: center; pointer-events: none; }
   .toast.show { transform: translateY(0); opacity: 1; }
   .toast.error { border-color: var(--red); color: var(--red); }
   .toast.success { border-color: var(--green); color: var(--green); }
-
-  /* Scrollable screens need bottom nav space */
-  #screen-analysis, #screen-history { padding-bottom: 80px; }
-
-  .hidden { display: none !important; }
-
-  /* Angle indicator on record screen */
-  .angle-indicator {
-    position: absolute;
-    bottom: 10px; left: 0; right: 0;
-    text-align: center;
-    font-family: var(--font-mono);
-    font-size: 10px;
-    color: rgba(255,255,255,0.6);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-  }
 </style>
 </head>
 <body>
 
-<!-- ── SETUP SCREEN ── -->
+<!-- SETUP -->
 <div id="screen-setup" class="screen active">
   <div class="setup-hero">
-    <div class="logo">
-      <div class="logo-icon">🏌️</div>
-      <span class="logo-text">SwingCoach</span>
-    </div>
+    <div class="logo"><div class="logo-icon">🏌️</div><span class="logo-text">SwingCoach</span></div>
     <div class="hero-label">AI Golf Analysis</div>
     <h1 class="hero-title">Fix your swing,<br><em>one thing</em><br>at a time.</h1>
     <p class="hero-sub">Upload your swing videos and get AI coaching focused on your biggest priority. No information overload.</p>
   </div>
-
   <div class="setup-body">
-    <div class="setup-section-label">Your Anthropic API Key</div>
+    <div class="setup-label">Your Anthropic API Key</div>
     <input type="password" class="input-field" id="api-key-input" placeholder="sk-ant-api03-..." autocomplete="off" spellcheck="false">
-    <p class="input-hint">Your key is stored only on your device and never leaves your phone. Get yours at console.anthropic.com</p>
-
+    <p class="input-hint">Stored only on your device. Never shared. Get yours at console.anthropic.com</p>
     <button class="btn-primary" onclick="handleSetup()">Get Started →</button>
   </div>
 </div>
 
-<!-- ── MAIN SCREENS (shown after setup) ── -->
-
-<!-- Record Screen -->
+<!-- RECORD -->
 <div id="screen-record" class="screen">
   <div class="record-header">
-    <div class="focus-pill" id="current-focus-pill">🎯 <span id="focus-pill-text">Loading...</span></div>
+    <div class="focus-pill">🎯 <span id="focus-pill-text">—</span></div>
     <h2 class="page-title">New Session</h2>
-    <p class="page-sub" id="record-subtitle">Record your swing for analysis</p>
+    <p class="page-sub" id="record-sub">Add your swing video to get started</p>
   </div>
 
-  <div style="padding: 16px 24px 0;">
-    <div class="session-bar">
-      <span class="session-label">Sessions today</span>
-      <span class="session-count" id="session-count-display">0 analyses</span>
-    </div>
+  <div class="view-tip">
+    <span style="font-size:16px;flex-shrink:0;">💡</span>
+    <div><div class="tip-label">Recommended for your focus</div><div class="tip-text" id="view-tip-text">—</div></div>
   </div>
 
-  <!-- View recommendation tip -->
-  <div id="view-tip" style="margin: 12px 24px 0; background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius-sm); padding:12px 14px; display:flex; gap:10px; align-items:flex-start;">
-    <span style="font-size:16px; flex-shrink:0;">💡</span>
-    <div>
-      <div style="font-family:var(--font-mono); font-size:10px; letter-spacing:1.5px; color:var(--text-dim); text-transform:uppercase; margin-bottom:3px;">Recommended for your focus</div>
-      <div id="view-tip-text" style="font-size:13px; color:var(--text-muted); line-height:1.5;"></div>
+  <!-- Down the line -->
+  <div class="video-zone">
+    <div class="zone-row">
+      <div class="zone-label" id="dtl-label">Down the Line</div>
+      <div class="zone-status" id="dtl-status">No video</div>
     </div>
-  </div>
-
-  <!-- Down the Line View -->
-  <div class="video-zone" id="side-zone">
-    <div style="display:flex; align-items:center; justify-content:space-between;">
-      <div class="result-section-label" style="margin:0">Down the Line <span style="color:var(--text-dim)">○</span> Optional</div>
-      <div id="side-status" style="font-size:12px; color:var(--text-dim);">No video</div>
-    </div>
-
-    <div class="video-slot" id="side-slot" onclick="handleSlotTap('side')">
+    <div class="video-slot" id="dtl-slot">
       <div class="video-slot-icon">📹</div>
       <div class="video-slot-text">Camera behind you,<br>pointing down the target line</div>
     </div>
-
     <div class="video-actions">
-      <button class="btn-record" onclick="startRecording('side')">⏺ Record</button>
-      <button class="btn-upload" onclick="triggerUpload('side')">📁 Upload</button>
+      <button class="btn-cam" onclick="triggerCapture('dtl')">📷 Open Camera</button>
+      <button class="btn-lib" onclick="triggerLibrary('dtl')">📁 From Library</button>
     </div>
+    <div class="ios-note">Tap "Open Camera" to record with your iPhone camera, then import</div>
   </div>
 
-  <!-- Face On View -->
-  <div class="video-zone" id="back-zone">
-    <div style="display:flex; align-items:center; justify-content:space-between;">
-      <div class="result-section-label" style="margin:0">Face On <span style="color:var(--text-dim)">○</span> Optional</div>
-      <div id="back-status" style="font-size:12px; color:var(--text-dim);">No video</div>
+  <!-- Face on -->
+  <div class="video-zone">
+    <div class="zone-row">
+      <div class="zone-label" id="fo-label">Face On</div>
+      <div class="zone-status" id="fo-status">No video</div>
     </div>
-
-    <div class="video-slot" id="back-slot" onclick="handleSlotTap('back')">
+    <div class="video-slot" id="fo-slot">
       <div class="video-slot-icon">📹</div>
       <div class="video-slot-text">Camera in front of you,<br>level with your hands</div>
     </div>
-
     <div class="video-actions">
-      <button class="btn-record" onclick="startRecording('back')">⏺ Record</button>
-      <button class="btn-upload" onclick="triggerUpload('back')">📁 Upload</button>
+      <button class="btn-cam" onclick="triggerCapture('fo')">📷 Open Camera</button>
+      <button class="btn-lib" onclick="triggerLibrary('fo')">📁 From Library</button>
     </div>
   </div>
 
   <div class="record-footer">
-    <button class="btn-primary" id="analyse-btn" onclick="startAnalysis()">Analyse My Swing →</button>
+    <div class="session-bar">
+      <span class="session-label">Total analyses</span>
+      <span class="session-val" id="session-val">0</span>
+    </div>
+    <button class="btn-primary" onclick="startAnalysis()">Analyse My Swing →</button>
     <button class="btn-secondary" onclick="showFocusScreen()">Change Focus Area</button>
   </div>
 </div>
 
-<!-- Focus Screen -->
+<!-- FOCUS -->
 <div id="screen-focus" class="screen">
   <div class="page-header">
-    <button class="back-btn" onclick="goBack()">← Back</button>
+    <button class="back-btn" onclick="showScreen('record')">← Back</button>
     <h2 class="page-title">Focus Area</h2>
-    <p class="page-sub">Choose one area to work on. Future sessions will prioritise this until you decide to move on.</p>
+    <p class="page-sub">Pick one area. All analysis will stay focused here until you move on.</p>
   </div>
-
   <div class="focus-grid">
     <div class="focus-card" data-focus="setup" onclick="selectFocus(this)">
       <div class="focus-icon">🧍</div>
-      <div class="focus-info">
-        <div class="focus-name">Setup & Address</div>
-        <div class="focus-desc">Grip, stance, ball position, posture and alignment before you swing</div>
-      </div>
+      <div class="focus-info"><div class="focus-name">Setup & Address</div><div class="focus-desc">Grip, stance, ball position, posture and alignment</div></div>
       <div class="focus-check"></div>
     </div>
-
     <div class="focus-card" data-focus="backswing" onclick="selectFocus(this)">
       <div class="focus-icon">🔄</div>
-      <div class="focus-info">
-        <div class="focus-name">Backswing</div>
-        <div class="focus-desc">Takeaway, swing plane, shoulder turn and wrist position at the top</div>
-      </div>
+      <div class="focus-info"><div class="focus-name">Backswing</div><div class="focus-desc">Takeaway, swing plane, shoulder turn, wrist position at the top</div></div>
       <div class="focus-check"></div>
     </div>
-
     <div class="focus-card" data-focus="downswing" onclick="selectFocus(this)">
       <div class="focus-icon">⚡</div>
-      <div class="focus-info">
-        <div class="focus-name">Downswing & Transition</div>
-        <div class="focus-desc">Weight shift, hip rotation, lag and the sequence from top to impact</div>
-      </div>
+      <div class="focus-info"><div class="focus-name">Downswing & Transition</div><div class="focus-desc">Weight shift, hip rotation, lag and sequence from top to impact</div></div>
       <div class="focus-check"></div>
     </div>
-
     <div class="focus-card" data-focus="impact" onclick="selectFocus(this)">
       <div class="focus-icon">💥</div>
-      <div class="focus-info">
-        <div class="focus-name">Impact Position</div>
-        <div class="focus-desc">Club face angle, shaft lean, hand position and body position at contact</div>
-      </div>
+      <div class="focus-info"><div class="focus-name">Impact Position</div><div class="focus-desc">Club face, shaft lean, hand position and body at contact</div></div>
       <div class="focus-check"></div>
     </div>
-
     <div class="focus-card" data-focus="followthrough" onclick="selectFocus(this)">
       <div class="focus-icon">🌀</div>
-      <div class="focus-info">
-        <div class="focus-name">Follow-Through</div>
-        <div class="focus-desc">Extension through the ball, rotation and finish position</div>
-      </div>
+      <div class="focus-info"><div class="focus-name">Follow-Through</div><div class="focus-desc">Extension through the ball, rotation and finish position</div></div>
       <div class="focus-check"></div>
     </div>
-
     <div class="focus-card" data-focus="overall" onclick="selectFocus(this)">
       <div class="focus-icon">🔍</div>
-      <div class="focus-info">
-        <div class="focus-name">Full Swing Overview</div>
-        <div class="focus-desc">AI picks the single biggest issue to fix across your entire swing</div>
-      </div>
+      <div class="focus-info"><div class="focus-name">Full Swing Overview</div><div class="focus-desc">AI picks the single biggest issue across your entire swing</div></div>
       <div class="focus-check"></div>
     </div>
   </div>
-
   <div class="focus-actions">
     <button class="btn-primary" onclick="confirmFocus()">Confirm Focus Area →</button>
   </div>
 </div>
 
-<!-- Analysis Screen -->
+<!-- ANALYSIS -->
 <div id="screen-analysis" class="screen">
   <div class="analysis-header">
     <button class="back-btn" onclick="goToRecord()">← New Session</button>
     <h2 class="page-title">Analysis</h2>
-    <div class="focus-pill" id="analysis-focus-pill" style="margin-top:8px;">🎯 <span id="analysis-focus-text"></span></div>
+    <div class="focus-pill" style="margin-top:8px;">🎯 <span id="analysis-focus-text">—</span></div>
   </div>
 
-  <!-- Loading state -->
   <div id="analysis-loading" class="loading-state">
     <div class="spinner"></div>
     <div class="loading-title">Analysing your swing</div>
     <div class="loading-sub">Extracting frames and reviewing your mechanics...</div>
     <div class="loading-steps">
-      <div class="loading-step active" id="step-1"><div class="step-dot"></div>Extracting key frames</div>
-      <div class="loading-step" id="step-2"><div class="step-dot"></div>Sending to AI coach</div>
-      <div class="loading-step" id="step-3"><div class="step-dot"></div>Reviewing your focus area</div>
-      <div class="loading-step" id="step-4"><div class="step-dot"></div>Generating drill recommendations</div>
+      <div class="step active" id="step-1"><div class="step-dot"></div>Extracting key frames</div>
+      <div class="step" id="step-2"><div class="step-dot"></div>Sending to AI coach</div>
+      <div class="step" id="step-3"><div class="step-dot"></div>Reviewing your focus area</div>
+      <div class="step" id="step-4"><div class="step-dot"></div>Generating drill recommendations</div>
     </div>
   </div>
 
-  <!-- Results -->
   <div id="analysis-results" class="hidden">
     <div class="results-container" id="results-content"></div>
     <div class="analysis-actions">
@@ -1117,553 +339,306 @@
   </div>
 </div>
 
-<!-- History Screen -->
+<!-- HISTORY -->
 <div id="screen-history" class="screen">
-  <div class="page-header" style="position:sticky; top:0; background:var(--bg); z-index:10;">
+  <div class="page-header" style="position:sticky;top:0;background:var(--bg);z-index:10;">
     <h2 class="page-title">Your History</h2>
-    <p class="page-sub">Review past sessions and track your improvements</p>
+    <p class="page-sub">Past sessions and feedback</p>
   </div>
   <div class="history-list" id="history-list"></div>
 </div>
 
-<!-- Bottom Nav -->
+<!-- BOTTOM NAV -->
 <nav class="bottom-nav" id="bottom-nav" style="display:none;">
-  <button class="nav-item active" id="nav-record" onclick="showScreen('record'); setActiveNav('nav-record')">
-    <span class="nav-item-icon">📹</span>
-    <span class="nav-item-label">Record</span>
+  <button class="nav-item active" id="nav-record" onclick="showScreen('record');setNav('nav-record')">
+    <span class="nav-icon">📹</span><span class="nav-label">Record</span>
   </button>
-  <button class="nav-item" id="nav-history" onclick="showHistory(); setActiveNav('nav-history')">
-    <span class="nav-item-icon">📋</span>
-    <span class="nav-item-label">History</span>
+  <button class="nav-item" id="nav-history" onclick="showHistory();setNav('nav-history')">
+    <span class="nav-icon">📋</span><span class="nav-label">History</span>
   </button>
   <button class="nav-item" id="nav-settings" onclick="showSettings()">
-    <span class="nav-item-icon">⚙️</span>
-    <span class="nav-item-label">Settings</span>
+    <span class="nav-icon">⚙️</span><span class="nav-label">Settings</span>
   </button>
 </nav>
 
-<!-- Camera Recording Overlay -->
-<div class="recording-overlay" id="recording-overlay">
-  <video id="camera-preview" autoplay playsinline muted></video>
-  <div class="angle-indicator" id="angle-indicator-text"></div>
-  <div class="recording-controls">
-    <button class="rec-btn-close" onclick="cancelRecording()">✕</button>
-    <button class="rec-btn-capture" id="capture-btn" onclick="toggleRecord()"></button>
-    <div class="rec-indicator"><div class="rec-dot"></div></div>
-  </div>
-</div>
+<!-- File inputs: capture= opens native camera; without it opens library -->
+<input type="file" id="in-dtl-cap" accept="video/*" capture="environment" style="display:none" onchange="handleFile(event,'dtl')">
+<input type="file" id="in-fo-cap"  accept="video/*" capture="environment" style="display:none" onchange="handleFile(event,'fo')">
+<input type="file" id="in-dtl-lib" accept="video/*" style="display:none" onchange="handleFile(event,'dtl')">
+<input type="file" id="in-fo-lib"  accept="video/*" style="display:none" onchange="handleFile(event,'fo')">
 
-<!-- Countdown -->
-<div class="countdown-overlay" id="countdown-overlay">
-  <div class="countdown-num" id="countdown-num"></div>
-</div>
-
-<!-- Hidden inputs -->
-<input type="file" id="upload-side" accept="video/*" capture="environment" style="display:none" onchange="handleUpload(event,'side')">
-<input type="file" id="upload-back" accept="video/*" capture="environment" style="display:none" onchange="handleUpload(event,'back')">
-
-<!-- Toast -->
 <div class="toast" id="toast"></div>
 
 <script>
-// ── STATE ──
-let state = {
+const state = {
   apiKey: '',
   focusArea: 'overall',
-  sideVideo: null,
-  backVideo: null,
+  dtlVideo: null,
+  foVideo: null,
   sessionCount: 0,
   history: [],
-  currentAngle: 'side',
-  mediaStream: null,
-  mediaRecorder: null,
-  recordedChunks: [],
-  isRecording: false
+  lastFrames: []
 };
 
 const FOCUS_LABELS = {
-  setup: 'Setup & Address',
-  backswing: 'Backswing',
-  downswing: 'Downswing & Transition',
-  impact: 'Impact Position',
-  followthrough: 'Follow-Through',
-  overall: 'Full Swing Overview'
+  setup: 'Setup & Address', backswing: 'Backswing',
+  downswing: 'Downswing & Transition', impact: 'Impact Position',
+  followthrough: 'Follow-Through', overall: 'Full Swing Overview'
 };
 
 const VIEW_TIPS = {
-  setup:        { text: 'Face on view is best for setup — it shows your alignment, ball position and posture clearly.', highlight: 'back' },
-  backswing:    { text: 'Down the line view is ideal for backswing — it reveals swing plane and club path most clearly.', highlight: 'side' },
-  downswing:    { text: 'Both views are great here. Down the line shows the transition and lag; face on shows hip drive and weight shift.', highlight: 'both' },
-  impact:       { text: 'Down the line view is best for impact — you can see shaft lean, club face and hand position clearly.', highlight: 'side' },
-  followthrough:{ text: 'Face on view works well for follow-through — it shows your rotation and finish position most clearly.', highlight: 'back' },
-  overall:      { text: 'Down the line is the most informative single angle. Add face on if you can for a fuller picture.', highlight: 'side' }
+  setup:         { text: 'Face on is best — shows alignment, ball position and posture clearly.', rec: 'fo' },
+  backswing:     { text: 'Down the line is ideal — reveals swing plane and club path most clearly.', rec: 'dtl' },
+  downswing:     { text: 'Both views are useful. Down the line shows lag; face on shows hip drive and weight shift.', rec: 'both' },
+  impact:        { text: 'Down the line is best — shows shaft lean, club face and hand position clearly.', rec: 'dtl' },
+  followthrough: { text: 'Face on works well — shows your rotation and finish position clearly.', rec: 'fo' },
+  overall:       { text: 'Down the line is the most informative single angle. Face on adds extra context.', rec: 'dtl' }
 };
 
-// ── INIT ──
+// INIT
 window.addEventListener('DOMContentLoaded', () => {
-  const saved = localStorage.getItem('swingcoach_key');
-  const savedFocus = localStorage.getItem('swingcoach_focus');
-  const savedHistory = localStorage.getItem('swingcoach_history');
-  const savedCount = localStorage.getItem('swingcoach_count');
-
-  if (savedFocus) state.focusArea = savedFocus;
-  if (savedHistory) state.history = JSON.parse(savedHistory);
-  if (savedCount) state.sessionCount = parseInt(savedCount);
-
-  if (saved) {
-    state.apiKey = saved;
-    enterApp();
-  }
+  const key = localStorage.getItem('sc_key');
+  state.focusArea    = localStorage.getItem('sc_focus') || 'overall';
+  state.history      = JSON.parse(localStorage.getItem('sc_history') || '[]');
+  state.sessionCount = parseInt(localStorage.getItem('sc_count') || '0');
+  if (key) { state.apiKey = key; enterApp(); }
 });
 
 function handleSetup() {
-  const key = document.getElementById('api-key-input').value.trim();
-  if (!key.startsWith('sk-ant-')) {
-    showToast('Please enter a valid Anthropic API key (starts with sk-ant-)', 'error');
-    return;
-  }
-  state.apiKey = key;
-  localStorage.setItem('swingcoach_key', key);
+  const k = document.getElementById('api-key-input').value.trim();
+  if (!k.startsWith('sk-ant-')) { toast('Please enter a valid Anthropic API key (starts with sk-ant-)', 'error'); return; }
+  state.apiKey = k;
+  localStorage.setItem('sc_key', k);
   enterApp();
 }
 
 function enterApp() {
   document.getElementById('screen-setup').classList.remove('active');
   document.getElementById('bottom-nav').style.display = 'flex';
-  
-  // If no focus chosen yet, show focus screen first
-  if (!localStorage.getItem('swingcoach_focus')) {
-    showFocusScreen(true);
-  } else {
-    showScreen('record');
-  }
+  if (!localStorage.getItem('sc_focus')) showFocusScreen();
+  else showScreen('record');
   updateUI();
 }
 
-// ── NAVIGATION ──
+// NAV
 function showScreen(name) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById('screen-' + name).classList.add('active');
 }
-
-function setActiveNav(id) {
+function setNav(id) {
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   document.getElementById(id)?.classList.add('active');
 }
-
-function goBack() { showScreen('record'); }
-
-function goToRecord() {
-  showScreen('record');
-  setActiveNav('nav-record');
-  // reset videos for new session
-  clearVideos();
-}
-
-function showFocusScreen(firstTime = false) {
+function goToRecord() { clearVideos(); showScreen('record'); setNav('nav-record'); }
+function showFocusScreen() {
   showScreen('focus');
-  // Highlight current selection
   document.querySelectorAll('.focus-card').forEach(c => {
-    c.classList.remove('selected');
-    c.querySelector('.focus-check').textContent = '';
-    if (c.dataset.focus === state.focusArea) {
-      c.classList.add('selected');
-      c.querySelector('.focus-check').textContent = '✓';
-    }
+    const sel = c.dataset.focus === state.focusArea;
+    c.classList.toggle('selected', sel);
+    c.querySelector('.focus-check').textContent = sel ? '✓' : '';
   });
 }
-
-function showHistory() {
-  showScreen('history');
-  setActiveNav('nav-history');
-  renderHistory();
-}
-
+function showHistory() { showScreen('history'); setNav('nav-history'); renderHistory(); }
 function showSettings() {
-  // Simple inline settings
-  const newKey = prompt('Update API Key (leave blank to keep current):');
-  if (newKey && newKey.startsWith('sk-ant-')) {
-    state.apiKey = newKey;
-    localStorage.setItem('swingcoach_key', newKey);
-    showToast('API key updated', 'success');
-  } else if (newKey) {
-    showToast('Invalid key format', 'error');
-  }
+  const k = prompt('Update API Key (blank to keep current):');
+  if (k && k.startsWith('sk-ant-')) { state.apiKey = k; localStorage.setItem('sc_key', k); toast('API key updated', 'success'); }
+  else if (k) toast('Invalid key format', 'error');
 }
 
-// ── FOCUS ──
-let tempFocus = null;
-
-function selectFocus(card) {
-  document.querySelectorAll('.focus-card').forEach(c => {
-    c.classList.remove('selected');
-    c.querySelector('.focus-check').textContent = '';
-  });
-  card.classList.add('selected');
-  card.querySelector('.focus-check').textContent = '✓';
-  tempFocus = card.dataset.focus;
-}
-
-function confirmFocus() {
-  if (!tempFocus) { showToast('Please select a focus area', 'error'); return; }
-  state.focusArea = tempFocus;
-  localStorage.setItem('swingcoach_focus', tempFocus);
-  updateUI();
-  showScreen('record');
-  setActiveNav('nav-record');
-}
-
+// UI
 function updateUI() {
-  const label = FOCUS_LABELS[state.focusArea] || 'Full Swing';
+  const label = FOCUS_LABELS[state.focusArea];
   document.getElementById('focus-pill-text').textContent = label;
   document.getElementById('analysis-focus-text').textContent = label;
-  document.getElementById('record-subtitle').textContent = 
-    state.focusArea === 'overall' 
-      ? 'AI will identify your biggest priority' 
-      : `Focused on: ${label}`;
-  document.getElementById('session-count-display').textContent = 
-    state.sessionCount + ' analyse' + (state.sessionCount !== 1 ? 's' : '');
+  document.getElementById('record-sub').textContent =
+    state.focusArea === 'overall' ? 'AI identifies your biggest priority' : `Focused on: ${label}`;
+  document.getElementById('session-val').textContent = state.sessionCount;
 
-  // Update view tip
   const tip = VIEW_TIPS[state.focusArea] || VIEW_TIPS.overall;
   document.getElementById('view-tip-text').textContent = tip.text;
 
-  // Highlight recommended zone labels
-  const sideLabel = document.querySelector('#side-zone .result-section-label');
-  const backLabel = document.querySelector('#back-zone .result-section-label');
-  if (sideLabel) sideLabel.innerHTML = `Down the Line ${tip.highlight === 'side' || tip.highlight === 'both' ? '<span style="color:var(--green)">★ Recommended</span>' : '<span style="color:var(--text-dim)">○ Optional</span>'}`;
-  if (backLabel) backLabel.innerHTML = `Face On ${tip.highlight === 'back' || tip.highlight === 'both' ? '<span style="color:var(--green)">★ Recommended</span>' : '<span style="color:var(--text-dim)">○ Optional</span>'}`;
+  const dtlRec = tip.rec === 'dtl' || tip.rec === 'both';
+  const foRec  = tip.rec === 'fo'  || tip.rec === 'both';
+  document.getElementById('dtl-label').innerHTML = `Down the Line${dtlRec ? ' <span style="color:var(--green)">★</span>' : ''}`;
+  document.getElementById('fo-label').innerHTML  = `Face On${foRec ? ' <span style="color:var(--green)">★</span>' : ''}`;
 }
 
-// ── VIDEO HANDLING ──
-function handleSlotTap(angle) {
-  // tap on existing video to clear it
-  if (state[angle + 'Video']) {
-    if (confirm('Remove this video?')) clearVideo(angle);
-  }
+// FOCUS
+let tempFocus = null;
+function selectFocus(card) {
+  document.querySelectorAll('.focus-card').forEach(c => { c.classList.remove('selected'); c.querySelector('.focus-check').textContent = ''; });
+  card.classList.add('selected'); card.querySelector('.focus-check').textContent = '✓';
+  tempFocus = card.dataset.focus;
+}
+function confirmFocus() {
+  if (!tempFocus) { toast('Please select a focus area', 'error'); return; }
+  state.focusArea = tempFocus;
+  localStorage.setItem('sc_focus', tempFocus);
+  updateUI(); showScreen('record'); setNav('nav-record');
 }
 
-function triggerUpload(angle) {
-  document.getElementById('upload-' + angle).click();
-}
+// VIDEO
+function triggerCapture(a) { document.getElementById('in-' + a + '-cap').click(); }
+function triggerLibrary(a) { document.getElementById('in-' + a + '-lib').click(); }
 
-function handleUpload(event, angle) {
-  const file = event.target.files[0];
-  if (!file) return;
+function handleFile(e, angle) {
+  const file = e.target.files[0]; if (!file) return;
+  state[angle + 'Video'] = file;
   const url = URL.createObjectURL(file);
-  setVideo(angle, url, file);
-  event.target.value = '';
-}
-
-function setVideo(angle, url, file) {
-  state[angle + 'Video'] = file || url;
   const slot = document.getElementById(angle + '-slot');
   slot.classList.add('has-video');
   slot.innerHTML = `
     <video src="${url}" muted playsinline webkit-playsinline></video>
-    <div class="video-slot-badge">${angle.toUpperCase()} ✓</div>
-  `;
-  document.getElementById(angle + '-status').textContent = '✓ Ready';
-  document.getElementById(angle + '-status').style.color = 'var(--green)';
+    <div class="video-slot-badge">${angle === 'dtl' ? 'DTL' : 'FO'} ✓</div>
+    <button class="video-slot-clear" onclick="clearVideo('${angle}',event)">✕</button>`;
+  const st = document.getElementById(angle + '-status');
+  st.textContent = '✓ Ready'; st.className = 'zone-status ready';
+  e.target.value = '';
 }
 
-function clearVideo(angle) {
+function clearVideo(angle, e) {
+  e?.stopPropagation();
   state[angle + 'Video'] = null;
   const slot = document.getElementById(angle + '-slot');
   slot.classList.remove('has-video');
   slot.innerHTML = `
     <div class="video-slot-icon">📹</div>
-    <div class="video-slot-text">Tap to record or<br>upload from library</div>
-  `;
-  document.getElementById(angle + '-status').textContent = 'No video';
-  document.getElementById(angle + '-status').style.color = 'var(--text-dim)';
+    <div class="video-slot-text">${angle === 'dtl' ? 'Camera behind you,<br>pointing down the target line' : 'Camera in front of you,<br>level with your hands'}</div>`;
+  const st = document.getElementById(angle + '-status');
+  st.textContent = 'No video'; st.className = 'zone-status';
 }
+function clearVideos() { clearVideo('dtl'); clearVideo('fo'); }
 
-function clearVideos() {
-  clearVideo('side');
-  clearVideo('back');
-}
-
-// ── CAMERA RECORDING ──
-async function startRecording(angle) {
-  state.currentAngle = angle;
-  try {
-    state.mediaStream = await navigator.mediaDevices.getUserMedia({
-      video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 720 } },
-      audio: false
-    });
-    const preview = document.getElementById('camera-preview');
-    preview.srcObject = state.mediaStream;
-    document.getElementById('angle-indicator-text').textContent = 
-      angle === 'side' ? '← Side View — Position camera to your side' : '↑ Back View — Position camera behind you';
-    document.getElementById('recording-overlay').classList.add('active');
-  } catch (e) {
-    showToast('Camera access denied. Please use Upload instead.', 'error');
-  }
-}
-
-function cancelRecording() {
-  stopStream();
-  document.getElementById('recording-overlay').classList.remove('active');
-  document.getElementById('recording-overlay').classList.remove('recording');
-  state.isRecording = false;
-  state.recordedChunks = [];
-}
-
-async function toggleRecord() {
-  if (!state.isRecording) {
-    // Countdown
-    await countdown(3);
-    beginRecording();
-  } else {
-    stopCapture();
-  }
-}
-
-function countdown(secs) {
-  return new Promise(resolve => {
-    const overlay = document.getElementById('countdown-overlay');
-    const num = document.getElementById('countdown-num');
-    let count = secs;
-    overlay.classList.add('active');
-
-    function tick() {
-      num.textContent = count;
-      // Re-trigger animation
-      num.style.animation = 'none';
-      num.offsetHeight;
-      num.style.animation = 'countPop 1s ease-out forwards';
-      if (count === 0) {
-        overlay.classList.remove('active');
-        resolve();
-        return;
-      }
-      count--;
-      setTimeout(tick, 1000);
-    }
-    tick();
-  });
-}
-
-function beginRecording() {
-  state.recordedChunks = [];
-  state.isRecording = true;
-  document.getElementById('recording-overlay').classList.add('recording');
-  document.getElementById('capture-btn').classList.add('recording');
-
-  const mimeType = MediaRecorder.isTypeSupported('video/webm;codecs=vp9') 
-    ? 'video/webm;codecs=vp9' 
-    : MediaRecorder.isTypeSupported('video/webm') 
-      ? 'video/webm' 
-      : 'video/mp4';
-
-  state.mediaRecorder = new MediaRecorder(state.mediaStream, { mimeType });
-  state.mediaRecorder.ondataavailable = e => { if (e.data.size > 0) state.recordedChunks.push(e.data); };
-  state.mediaRecorder.onstop = finishRecording;
-  state.mediaRecorder.start(100);
-}
-
-function stopCapture() {
-  state.isRecording = false;
-  state.mediaRecorder?.stop();
-  document.getElementById('recording-overlay').classList.remove('recording');
-  document.getElementById('capture-btn').classList.remove('recording');
-}
-
-function finishRecording() {
-  const blob = new Blob(state.recordedChunks, { type: state.mediaRecorder.mimeType });
-  const url = URL.createObjectURL(blob);
-  const file = new File([blob], `swing-${state.currentAngle}-${Date.now()}.webm`, { type: blob.type });
-  setVideo(state.currentAngle, url, file);
-  stopStream();
-  document.getElementById('recording-overlay').classList.remove('active');
-  state.recordedChunks = [];
-}
-
-function stopStream() {
-  if (state.mediaStream) {
-    state.mediaStream.getTracks().forEach(t => t.stop());
-    state.mediaStream = null;
-  }
-}
-
-// ── ANALYSIS ──
+// ANALYSIS
 async function startAnalysis() {
-  if (!state.sideVideo && !state.backVideo) {
-    showToast('Please record or upload at least one video first', 'error');
-    return;
-  }
-
+  if (!state.dtlVideo && !state.foVideo) { toast('Please add at least one video first', 'error'); return; }
   showScreen('analysis');
   document.getElementById('analysis-loading').classList.remove('hidden');
   document.getElementById('analysis-results').classList.add('hidden');
 
   try {
-    // Step 1: Extract frames
-    setLoadingStep(1);
-    const frames = await extractFrames();
+    setStep(1);
+    const frames = await extractAll();
+    state.lastFrames = frames;
 
-    // Step 2: Send to API
-    setLoadingStep(2);
-    await delay(600);
-    setLoadingStep(3);
+    setStep(2); await delay(500);
+    setStep(3);
+    const analysis = await callClaude(frames);
 
-    const analysis = await analyseWithClaude(frames);
+    setStep(4); await delay(400);
 
-    // Step 4: Done
-    setLoadingStep(4);
-    await delay(400);
-
-    // Save to history
     const record = {
       id: Date.now(),
       date: new Date().toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }),
       focus: state.focusArea,
       focusLabel: FOCUS_LABELS[state.focusArea],
-      analysis: analysis,
-      angles: [state.sideVideo ? 'side' : null, state.backVideo ? 'back' : null].filter(Boolean)
+      analysis,
+      frames: frames.map(f => ({ label: f.label, phase: f.phase, base64: f.base64 }))
     };
-
     state.history.unshift(record);
-    localStorage.setItem('swingcoach_history', JSON.stringify(state.history.slice(0, 50)));
-
+    localStorage.setItem('sc_history', JSON.stringify(state.history.slice(0, 30)));
     state.sessionCount++;
-    localStorage.setItem('swingcoach_count', state.sessionCount);
+    localStorage.setItem('sc_count', state.sessionCount);
     updateUI();
-
-    renderResults(analysis);
-
+    renderResults(analysis, frames);
   } catch (err) {
     console.error(err);
     document.getElementById('analysis-loading').classList.add('hidden');
-    showToast('Analysis failed: ' + (err.message || 'Check your API key and try again'), 'error');
+    toast('Analysis failed: ' + (err.message || 'Check your API key and credits'), 'error');
     showScreen('record');
   }
 }
 
-function setLoadingStep(n) {
+function setStep(n) {
   for (let i = 1; i <= 4; i++) {
     const el = document.getElementById('step-' + i);
-    el.classList.remove('active', 'done');
-    if (i < n) el.classList.add('done');
-    if (i === n) el.classList.add('active');
+    el.className = 'step' + (i < n ? ' done' : i === n ? ' active' : '');
   }
 }
 
-async function extractFrames() {
+async function extractAll() {
   const frames = [];
-  const targets = [
-    { file: state.sideVideo, label: 'side' },
-    { file: state.backVideo, label: 'back' }
-  ].filter(t => t.file);
-
-  for (const target of targets) {
-    const videoFrames = await extractVideoFrames(target.file, target.label);
-    frames.push(...videoFrames);
+  for (const src of [{ file: state.dtlVideo, label: 'down the line' }, { file: state.foVideo, label: 'face on' }]) {
+    if (src.file) frames.push(...await extractFrames(src.file, src.label));
   }
   return frames;
 }
 
-function extractVideoFrames(file, label) {
+function extractFrames(file, label) {
   return new Promise((resolve, reject) => {
     const video = document.createElement('video');
-    const url = file instanceof File ? URL.createObjectURL(file) : file;
-    video.src = url;
-    video.muted = true;
-    video.playsInline = true;
-
+    const url = URL.createObjectURL(file);
+    video.src = url; video.muted = true; video.playsInline = true;
     video.addEventListener('loadedmetadata', async () => {
-      const duration = video.duration;
+      const dur = video.duration;
+      const positions = [0.05, 0.30, 0.55, 0.82];
+      const phases = ['Address', 'Backswing', 'Downswing / Impact', 'Follow-Through'];
       const frames = [];
-      // Extract 4 key frames: 5%, 30%, 55%, 80% through video
-      const positions = [0.05, 0.30, 0.55, 0.80];
-      const phaseNames = ['Address', 'Backswing', 'Downswing/Impact', 'Follow-through'];
-
       for (let i = 0; i < positions.length; i++) {
-        const time = duration * positions[i];
-        const base64 = await captureFrame(video, time);
-        frames.push({ base64, label, phase: phaseNames[i] });
+        const b64 = await captureFrame(video, dur * positions[i]);
+        frames.push({ base64: b64, label, phase: phases[i] });
       }
-
-      if (file instanceof File) URL.revokeObjectURL(url);
+      URL.revokeObjectURL(url);
       resolve(frames);
     });
-
-    video.addEventListener('error', reject);
+    video.addEventListener('error', () => reject(new Error('Could not read video')));
     video.load();
   });
 }
 
 function captureFrame(video, time) {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     video.currentTime = time;
-    video.addEventListener('seeked', function handler() {
-      video.removeEventListener('seeked', handler);
-      const canvas = document.createElement('canvas');
-      canvas.width = 640;
-      canvas.height = 360;
-      const ctx = canvas.getContext('2d');
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-      const base64 = canvas.toDataURL('image/jpeg', 0.7).split(',')[1];
-      resolve(base64);
+    video.addEventListener('seeked', function h() {
+      video.removeEventListener('seeked', h);
+      const c = document.createElement('canvas');
+      c.width = 640; c.height = 360;
+      c.getContext('2d').drawImage(video, 0, 0, 640, 360);
+      resolve(c.toDataURL('image/jpeg', 0.75).split(',')[1]);
     }, { once: true });
   });
 }
 
-async function analyseWithClaude(frames) {
+async function callClaude(frames) {
   const focusLabel = FOCUS_LABELS[state.focusArea];
-  const hasMultiAngle = frames.some(f => f.label === 'side') && frames.some(f => f.label === 'back');
+  const hasMulti = frames.some(f => f.label === 'down the line') && frames.some(f => f.label === 'face on');
 
-  const systemPrompt = `You are an expert PGA golf coach with 20+ years of experience. You analyse golf swings from video frames and give structured, prioritised coaching feedback.
+  const system = `You are an expert PGA golf coach. Analyse swing frames and give structured, prioritised feedback.
 
-Your philosophy: Fix one thing at a time. Don't overwhelm the student. Always lead with the SINGLE most important change that will have the biggest impact. Be specific and practical — no vague advice.
+Philosophy: Fix one thing at a time. Lead with the SINGLE most important change. Be specific and practical.
 
-The student has chosen to focus on: ${focusLabel}
-${state.focusArea !== 'overall' ? `Keep your analysis tightly focused on this phase. Mention other phases briefly only if they directly impact this phase.` : `Identify and highlight the single biggest priority across the entire swing.`}
+Student's chosen focus: ${focusLabel}
+${state.focusArea !== 'overall' ? 'Stay focused on this phase only. Mention others only if they directly cause issues here.' : 'Identify the single biggest priority across the full swing.'}
 
-Return your response as a valid JSON object with this structure:
+IMPORTANT: Include "frameIndex" (0=Address, 1=Backswing, 2=Downswing/Impact, 3=Follow-Through) and "frameLabel" ("down the line" or "face on") in topPriority and each observation, indicating which frame best illustrates the point.
+
+Return ONLY valid JSON:
 {
   "topPriority": {
-    "phase": "name of swing phase",
-    "issue": "single sentence describing the main problem",
-    "why": "why this matters most right now (1-2 sentences)",
-    "fix": "specific, practical instruction on what to change (2-3 sentences)",
-    "drill": {
-      "name": "name of the drill",
-      "instructions": "step by step drill instructions (3-5 sentences)"
-    }
+    "phase": "string",
+    "issue": "one sentence",
+    "why": "1-2 sentences",
+    "fix": "2-3 sentences of specific practical instruction",
+    "frameIndex": 2,
+    "frameLabel": "down the line",
+    "drill": { "name": "string", "instructions": "3-5 sentences" }
   },
   "observations": [
-    {
-      "phase": "phase name",
-      "priority": 1,
-      "observation": "what you see (1-2 sentences)",
-      "suggestion": "what to adjust (1-2 sentences)"
-    }
+    { "phase": "string", "priority": 1, "observation": "1-2 sentences", "suggestion": "1-2 sentences", "frameIndex": 0, "frameLabel": "down the line" }
   ],
-  "positives": "what the golfer is doing well (1-2 sentences)",
-  "nextSession": "what to focus on AFTER the top priority is fixed (1 sentence)"
+  "positives": "1-2 sentences",
+  "nextSession": "1 sentence"
 }
 
-Keep observations to 2-3 items max. Be direct, specific and encouraging. Use plain language, not jargon.`;
+Max 2-3 observations. Direct, specific, encouraging. Plain language.`;
 
-  const imageContent = frames.map(frame => ({
-    type: 'image',
-    source: {
-      type: 'base64',
-      media_type: 'image/jpeg',
-      data: frame.base64
-    }
-  }));
-
-  const textContent = {
+  const images = frames.map(f => ({ type: 'image', source: { type: 'base64', media_type: 'image/jpeg', data: f.base64 } }));
+  const text = {
     type: 'text',
-    text: `These are ${frames.length} frames from a golf swing${hasMultiAngle ? ' from two angles (down the line and face on)' : ''}. The frames are in chronological order showing: ${frames.map(f => `${f.label === 'side' ? 'down the line' : 'face on'} view - ${f.phase}`).join(', ')}.
-
-Please analyse this golf swing and return your coaching feedback as JSON.`
+    text: `${frames.length} golf swing frames${hasMulti ? ' from two angles' : ''}. In order: ${frames.map((f, i) => `Frame ${i} — ${f.label}, ${f.phase}`).join('; ')}. Analyse and return JSON.`
   };
 
-  const response = await fetch('https://api.anthropic.com/v1/messages', {
+  const res = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -1674,112 +649,114 @@ Please analyse this golf swing and return your coaching feedback as JSON.`
     body: JSON.stringify({
       model: 'claude-opus-4-6',
       max_tokens: 1500,
-      system: systemPrompt,
-      messages: [{
-        role: 'user',
-        content: [...imageContent, textContent]
-      }]
+      system,
+      messages: [{ role: 'user', content: [...images, text] }]
     })
   });
 
-  if (!response.ok) {
-    const err = await response.json();
-    throw new Error(err.error?.message || `API error ${response.status}`);
-  }
-
-  const data = await response.json();
-  const text = data.content[0].text;
-  
-  // Extract JSON
-  const jsonMatch = text.match(/\{[\s\S]*\}/);
-  if (!jsonMatch) throw new Error('Could not parse AI response');
-  return JSON.parse(jsonMatch[0]);
+  if (!res.ok) { const e = await res.json(); throw new Error(e.error?.message || `API error ${res.status}`); }
+  const data = await res.json();
+  const match = data.content[0].text.match(/\{[\s\S]*\}/);
+  if (!match) throw new Error('Could not parse AI response');
+  return JSON.parse(match[0]);
 }
 
-// ── RENDER RESULTS ──
-function renderResults(analysis) {
+// RENDER
+function renderResults(analysis, frames) {
   const container = document.getElementById('results-content');
-  
-  const priorityColors = ['priority-1', 'priority-2', 'priority-3'];
-
-  let html = '';
-
-  // TOP PRIORITY CARD
   const tp = analysis.topPriority;
-  html += `
-  <div class="focus-highlight">
-    <div class="focus-highlight-icon">🎯</div>
+
+  function getFrame(frameIndex, frameLabel) {
+    const labelFrames = frames.filter(f => f.label === frameLabel);
+    return labelFrames[frameIndex] || frames[frameIndex] || frames[0] || null;
+  }
+
+  function frameBlock(frameIndex, frameLabel) {
+    const f = getFrame(frameIndex, frameLabel);
+    if (!f) return '';
+    return `
+      <div>
+        <div class="rl">Frame Reference · ${f.phase} · ${f.label}</div>
+        <img class="frame-img" src="data:image/jpeg;base64,${f.base64}" alt="${f.phase}">
+        <div class="frame-cap">↑ This is the frame the AI is referring to</div>
+      </div>`;
+  }
+
+  let html = `
+  <div class="top-banner">
+    <span class="banner-icon">🎯</span>
     <div>
-      <div class="focus-highlight-label">Top Priority · Fix This First</div>
-      <div class="focus-highlight-text"><strong style="color:var(--text)">${tp.phase}: ${tp.issue}</strong></div>
+      <div class="banner-label">Fix This First</div>
+      <div class="banner-text"><strong style="color:var(--text)">${tp.phase}:</strong> ${tp.issue}</div>
     </div>
   </div>
 
   <div class="result-card">
     <div class="result-card-header">
       <div class="result-phase">${tp.phase}</div>
-      <span class="priority-badge priority-1">🔴 Fix First</span>
+      <span class="priority-badge p1">🔴 Top Priority</span>
     </div>
     <div class="result-card-body">
-      <div>
-        <div class="result-section-label">Why This Matters</div>
-        <div class="result-observation">${tp.why}</div>
-      </div>
-      <div>
-        <div class="result-section-label">What To Do</div>
-        <div class="result-observation">${tp.fix}</div>
-      </div>
+      ${frameBlock(tp.frameIndex, tp.frameLabel)}
+      <div><div class="rl">Why This Matters</div><div class="rt">${tp.why}</div></div>
+      <div><div class="rl">What To Do</div><div class="rt">${tp.fix}</div></div>
       <div class="drill-box">
-        <div class="drill-title">${tp.drill.name}</div>
+        <div class="drill-title">⛳ ${tp.drill.name}</div>
         <div class="drill-text">${tp.drill.instructions}</div>
       </div>
     </div>
   </div>`;
 
-  // OTHER OBSERVATIONS
-  if (analysis.observations && analysis.observations.length > 0) {
-    html += `<div style="margin-top:4px;"><div class="result-section-label" style="padding: 0 4px;">Other Observations</div></div>`;
-    
-    analysis.observations.forEach((obs, i) => {
-      const pClass = priorityColors[Math.min(obs.priority, 2)] || 'priority-3';
-      const pLabel = obs.priority === 1 ? '🔴 High' : obs.priority === 2 ? '🟡 Medium' : '🟢 Minor';
+  if (analysis.observations?.length) {
+    html += `<div><div class="rl" style="padding:0 4px;">Other Observations</div></div>`;
+    analysis.observations.forEach(obs => {
+      const pc = obs.priority === 1 ? 'p1' : obs.priority === 2 ? 'p2' : 'p3';
+      const pl = obs.priority === 1 ? '🔴 High' : obs.priority === 2 ? '🟡 Medium' : '🟢 Minor';
       html += `
       <div class="result-card">
         <div class="result-card-header">
           <div class="result-phase">${obs.phase}</div>
-          <span class="priority-badge ${pClass}">${pLabel}</span>
+          <span class="priority-badge ${pc}">${pl}</span>
         </div>
         <div class="result-card-body">
-          <div>
-            <div class="result-section-label">What I See</div>
-            <div class="result-observation">${obs.observation}</div>
-          </div>
-          <div>
-            <div class="result-section-label">Suggestion</div>
-            <div class="result-text">${obs.suggestion}</div>
-          </div>
+          ${frameBlock(obs.frameIndex, obs.frameLabel)}
+          <div><div class="rl">What I See</div><div class="rt">${obs.observation}</div></div>
+          <div><div class="rl">Suggestion</div><div class="rt-dim">${obs.suggestion}</div></div>
         </div>
       </div>`;
     });
   }
 
-  // POSITIVES
   if (analysis.positives) {
     html += `
     <div class="result-card">
       <div class="result-card-body">
-        <div class="result-section-label">What You're Doing Well</div>
-        <div class="result-observation">✅ ${analysis.positives}</div>
+        <div class="rl">What You're Doing Well</div>
+        <div class="rt">✅ ${analysis.positives}</div>
       </div>
     </div>`;
   }
 
-  // NEXT SESSION
   if (analysis.nextSession) {
     html += `
-    <div style="background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px 16px;">
-      <div class="result-section-label" style="margin-bottom:6px;">After You've Fixed This →</div>
-      <div style="font-size:13px; color:var(--text-muted); line-height:1.6;">${analysis.nextSession}</div>
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 16px;">
+      <div class="rl" style="margin-bottom:6px;">After You've Fixed This →</div>
+      <div style="font-size:13px;color:var(--text-muted);line-height:1.6;">${analysis.nextSession}</div>
+    </div>`;
+  }
+
+  // All frames strip
+  if (frames.length) {
+    html += `
+    <div>
+      <div class="rl" style="padding:0 4px;margin-bottom:10px;">All Extracted Frames</div>
+      <div class="frame-strip">
+        ${frames.map(f => `
+          <div class="frame-thumb-wrap">
+            <img class="frame-thumb" src="data:image/jpeg;base64,${f.base64}" alt="${f.phase}">
+            <div class="frame-thumb-cap">${f.phase}</div>
+          </div>`).join('')}
+      </div>
     </div>`;
   }
 
@@ -1789,54 +766,40 @@ function renderResults(analysis) {
   document.getElementById('screen-analysis').scrollTo(0, 0);
 }
 
-// ── HISTORY ──
+// HISTORY
 function renderHistory() {
   const list = document.getElementById('history-list');
-  if (state.history.length === 0) {
+  if (!state.history.length) {
     list.innerHTML = `<div class="empty-state"><div class="empty-icon">📋</div>No sessions yet.<br>Record your first swing to get started.</div>`;
     return;
   }
-
   list.innerHTML = state.history.map(item => `
-    <div class="history-item" onclick="viewHistoryItem(${item.id})">
-      <div class="history-item-top">
-        <span class="history-date">${item.date}</span>
-        <span class="history-focus">${item.focusLabel}</span>
+    <div class="history-item" onclick="viewHistory(${item.id})">
+      <div class="hi-top">
+        <span class="hi-date">${item.date}</span>
+        <span class="hi-focus">${item.focusLabel}</span>
       </div>
-      <div class="history-summary">
-        <strong>${item.analysis?.topPriority?.phase || ''}:</strong> ${item.analysis?.topPriority?.issue || 'Tap to view'}
-      </div>
-    </div>
-  `).join('');
+      <div class="hi-summary"><strong>${item.analysis?.topPriority?.phase || ''}:</strong> ${item.analysis?.topPriority?.issue || 'Tap to view'}</div>
+    </div>`).join('');
 }
 
-function viewHistoryItem(id) {
-  const item = state.history.find(h => h.id === id);
-  if (!item) return;
-  
-  // Update focus label display
+function viewHistory(id) {
+  const item = state.history.find(h => h.id === id); if (!item) return;
   document.getElementById('analysis-focus-text').textContent = item.focusLabel;
   showScreen('analysis');
   document.getElementById('analysis-loading').classList.add('hidden');
   document.getElementById('analysis-results').classList.remove('hidden');
-  renderResults(item.analysis);
+  renderResults(item.analysis, item.frames || []);
 }
 
-// ── UTILS ──
-function showToast(msg, type = '') {
+// UTILS
+function toast(msg, type = '') {
   const t = document.getElementById('toast');
   t.textContent = msg;
   t.className = 'toast show' + (type ? ' ' + type : '');
-  setTimeout(() => t.classList.remove('show'), 3000);
+  setTimeout(() => t.classList.remove('show'), 3500);
 }
-
 function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
-
-// handle back button on android
-window.addEventListener('popstate', () => {
-  const active = document.querySelector('.screen.active');
-  if (active && active.id !== 'screen-record') goToRecord();
-});
 </script>
 </body>
 </html>
