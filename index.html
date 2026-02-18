@@ -965,16 +965,25 @@
     </div>
   </div>
 
-  <!-- Side View -->
+  <!-- View recommendation tip -->
+  <div id="view-tip" style="margin: 12px 24px 0; background:var(--surface2); border:1px solid var(--border); border-radius:var(--radius-sm); padding:12px 14px; display:flex; gap:10px; align-items:flex-start;">
+    <span style="font-size:16px; flex-shrink:0;">💡</span>
+    <div>
+      <div style="font-family:var(--font-mono); font-size:10px; letter-spacing:1.5px; color:var(--text-dim); text-transform:uppercase; margin-bottom:3px;">Recommended for your focus</div>
+      <div id="view-tip-text" style="font-size:13px; color:var(--text-muted); line-height:1.5;"></div>
+    </div>
+  </div>
+
+  <!-- Down the Line View -->
   <div class="video-zone" id="side-zone">
     <div style="display:flex; align-items:center; justify-content:space-between;">
-      <div class="result-section-label" style="margin:0">Side View <span style="color:var(--green)">●</span> Required</div>
+      <div class="result-section-label" style="margin:0">Down the Line <span style="color:var(--text-dim)">○</span> Optional</div>
       <div id="side-status" style="font-size:12px; color:var(--text-dim);">No video</div>
     </div>
 
     <div class="video-slot" id="side-slot" onclick="handleSlotTap('side')">
       <div class="video-slot-icon">📹</div>
-      <div class="video-slot-text">Tap to record or<br>upload from library</div>
+      <div class="video-slot-text">Camera behind you,<br>pointing down the target line</div>
     </div>
 
     <div class="video-actions">
@@ -983,16 +992,16 @@
     </div>
   </div>
 
-  <!-- Back View -->
+  <!-- Face On View -->
   <div class="video-zone" id="back-zone">
     <div style="display:flex; align-items:center; justify-content:space-between;">
-      <div class="result-section-label" style="margin:0">Back View <span style="color:var(--text-dim)">○</span> Optional</div>
+      <div class="result-section-label" style="margin:0">Face On <span style="color:var(--text-dim)">○</span> Optional</div>
       <div id="back-status" style="font-size:12px; color:var(--text-dim);">No video</div>
     </div>
 
     <div class="video-slot" id="back-slot" onclick="handleSlotTap('back')">
       <div class="video-slot-icon">📹</div>
-      <div class="video-slot-text">Tap to record or<br>upload from library</div>
+      <div class="video-slot-text">Camera in front of you,<br>level with your hands</div>
     </div>
 
     <div class="video-actions">
@@ -1181,6 +1190,15 @@ const FOCUS_LABELS = {
   overall: 'Full Swing Overview'
 };
 
+const VIEW_TIPS = {
+  setup:        { text: 'Face on view is best for setup — it shows your alignment, ball position and posture clearly.', highlight: 'back' },
+  backswing:    { text: 'Down the line view is ideal for backswing — it reveals swing plane and club path most clearly.', highlight: 'side' },
+  downswing:    { text: 'Both views are great here. Down the line shows the transition and lag; face on shows hip drive and weight shift.', highlight: 'both' },
+  impact:       { text: 'Down the line view is best for impact — you can see shaft lean, club face and hand position clearly.', highlight: 'side' },
+  followthrough:{ text: 'Face on view works well for follow-through — it shows your rotation and finish position most clearly.', highlight: 'back' },
+  overall:      { text: 'Down the line is the most informative single angle. Add face on if you can for a fuller picture.', highlight: 'side' }
+};
+
 // ── INIT ──
 window.addEventListener('DOMContentLoaded', () => {
   const saved = localStorage.getItem('swingcoach_key');
@@ -1305,6 +1323,16 @@ function updateUI() {
       : `Focused on: ${label}`;
   document.getElementById('session-count-display').textContent = 
     state.sessionCount + ' analyse' + (state.sessionCount !== 1 ? 's' : '');
+
+  // Update view tip
+  const tip = VIEW_TIPS[state.focusArea] || VIEW_TIPS.overall;
+  document.getElementById('view-tip-text').textContent = tip.text;
+
+  // Highlight recommended zone labels
+  const sideLabel = document.querySelector('#side-zone .result-section-label');
+  const backLabel = document.querySelector('#back-zone .result-section-label');
+  if (sideLabel) sideLabel.innerHTML = `Down the Line ${tip.highlight === 'side' || tip.highlight === 'both' ? '<span style="color:var(--green)">★ Recommended</span>' : '<span style="color:var(--text-dim)">○ Optional</span>'}`;
+  if (backLabel) backLabel.innerHTML = `Face On ${tip.highlight === 'back' || tip.highlight === 'both' ? '<span style="color:var(--green)">★ Recommended</span>' : '<span style="color:var(--text-dim)">○ Optional</span>'}`;
 }
 
 // ── VIDEO HANDLING ──
@@ -1630,7 +1658,7 @@ Keep observations to 2-3 items max. Be direct, specific and encouraging. Use pla
 
   const textContent = {
     type: 'text',
-    text: `These are ${frames.length} frames from a golf swing${hasMultiAngle ? ' from two angles (side and back view)' : ''}. The frames are in chronological order showing: ${frames.map(f => `${f.label} view - ${f.phase}`).join(', ')}.
+    text: `These are ${frames.length} frames from a golf swing${hasMultiAngle ? ' from two angles (down the line and face on)' : ''}. The frames are in chronological order showing: ${frames.map(f => `${f.label === 'side' ? 'down the line' : 'face on'} view - ${f.phase}`).join(', ')}.
 
 Please analyse this golf swing and return your coaching feedback as JSON.`
   };
